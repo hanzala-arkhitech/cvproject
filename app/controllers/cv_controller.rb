@@ -20,12 +20,8 @@ class CvController < ApplicationController
 
     # Add encrypted password to user
     @user.password = encrypted_pwd
+    @user.save
 
-    puts crypt.decrypt_and_verify(encrypted_pwd)
-
-
-
-    puts @user.email
   end 
 
 end
