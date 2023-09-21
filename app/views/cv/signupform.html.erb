@@ -3,12 +3,26 @@
 <h1 class="text-center"> Signup </h1>
   <div class="mb-3">
     <label for=signupEmail" class="form-label">Email address</label>
-    <input name="signupEmail" type="email" class="form-control" id="signupEmail">
+    <input name="signupEmail" type="email" class="form-control" id="signupEmail" required>
   </div>
   <div class="mb-3">
     <label for="signupPwd" class="form-label">Password</label>
-    <input name="signupPwd" type="password" class="form-control" id="signupPwd">
+    <input name="signupPwd" type="password" class="form-control" id="signupPwd" required>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
-  <a href="/loginform">Already Have an Account? Login Here.</a>
+  <%= link_to "Already Have an Account? Login Here.", loginform_path%>
 </form>
+
+<div id="message" class="alert text-center text-red">
+<% if flash[:message]%>
+   <p> <%= flash[:message] %></p>
+<% end %>
+</div>
+
+
+<script>
+setTimeout(() => {
+  message = document.getElementById("message");
+  message.classList.add("d-none")
+}, 2000);
+</script>

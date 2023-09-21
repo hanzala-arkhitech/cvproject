@@ -8,20 +8,86 @@ class CvController < ApplicationController
 
   def signup
   end
+  
+  def error
+  end
 
   def registerUser
-    @user = User.new
-    @user.email = params[:signupEmail]
+    @email = params[:signupEmail]
+    @password = params[:signupPwd]
 
-    # Encrypt the Password
-    key = SecureRandom.random_bytes(32)
-    crypt = ActiveSupport::MessageEncryptor.new(key)
-    encrypted_pwd = crypt.encrypt_and_sign(params[:signupPwd])
+    @userExists = User.find_by(email:@email)
 
-    # Add encrypted password to user
-    @user.password = encrypted_pwd
-    @user.save
 
-  end 
+    if !@userExists
+        @user = User.new
+        @user.email = params[:signupEmail]
+    
+        # Encrypt the Password
+        len = ActiveSupport::MessageEncryptor.key_len
+        salt = SecureRandom.random_bytes(len)
+        key = ActiveSupport::KeyGenerator.new('password').generate_key(salt, len)
+        crypt = ActiveSupport::MessageEncryptor.new(key)
+        encrypted_pwd = crypt.encrypt_and_sign(params[:signupPwd])
+    
+        # Add encrypted password to user
+        @user.password = encrypted_pwd
+
+        puts "encrypted_pwd: #{encrypted_pwd}"
+        puts "decryoted @user.password: #{crypt.decrypt_and_verify(@user.password)}"
+
+        @message = "Registration Successfull,"
+        flash[:message] = @message
+        @user.save
+        redirect_to signupform_path
+    else
+        @message = "This user is already registered."
+        flash[:message] = @message
+        redirect_to signupform_path
+    end 
+
+  end
+
+  def loginUser
+    # Retrieve user's email and entered password
+    email = params[:loginEmail]
+    entered_password = params[:loginPwd]
+
+    puts email
+    puts entered_password
+
+  
+    # Find the user by email
+    @user = User.find_by(email: email)
+
+    puts "@user: #{@user}"
+    
+    if @user
+      # Decrypt the stored password
+      len = ActiveSupport::MessageEncryptor.key_len
+      salt = SecureRandom.random_bytes(len)
+      key = ActiveSupport::KeyGenerator.new('password').generate_key(salt, len)
+      crypt = ActiveSupport::MessageEncryptor.new(key)
+      puts "decryoted @user.password: #{crypt.decrypt_and_verify(@user.password)}"
+      decrypted_pwd = crypt.decrypt_and_verify(@user.password)
+  
+      # Compare the entered password with the decrypted password
+      if entered_password == decrypted_pwd
+        # Passwords match, user is authenticated
+        redirect_to home_path
+      else
+        # Passwords do not match
+        @error = "Wrong Email or Password."
+        flash[:error] = @error
+        redirect_to loginform_path
+      end
+    else    
+      # User not found by email
+      @error = "Wrong Email or Password."
+      flash[:error] = @error
+      redirect_to loginform_path
+    end 
+  end
+  
 
 end

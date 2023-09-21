@@ -1,16 +1,33 @@
 
 
 
-<form class="container mt-4">
+<form method="POST" action="loginUser" class="container mt-4">
 <h1 class="text-center"> Login </h1>
   <div class="mb-3">
     <label for="loginEmail" class="form-label">Email address</label>
-    <input type="email" class="form-control" id="loginEmail">
+    <input name="loginEmail" type="email" class="form-control" id="loginEmail" required>
   </div>
   <div class="mb-3">
     <label for="loginPwd" class="form-label">Password</label>
-    <input type="password" class="form-control" id="loginPwd">
+    <input name="loginPwd" type="password" class="form-control" id="loginPwd" required>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
-  <a href="/signupform">Don't Have an Account? Signup Here.</a>
+  <%= link_to "Don't Have an Account? Signup Here.", signupform_path%>
 </form>
+
+
+<div id="error" class="alert alert-warning text-center text-red">
+<% if flash[:error]%>
+   <p> <%= flash[:error] %></p>
+<% end %>
+</div>
+
+
+
+
+<script>
+setTimeout(() => {
+  error = document.getElementById("error");
+  error.classList.add("d-none")
+}, 2000);
+</script>
