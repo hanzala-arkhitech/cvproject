@@ -13,11 +13,15 @@
   <%= link_to "Already Have an Account? Login Here.", loginform_path%>
 </form>
 
-<div id="message" class="alert text-center text-red">
-<% if flash[:message]%>
-   <p> <%= flash[:message] %></p>
+<% if flash[:success]%>
+  <div id="message" class="alert alert-success text-center text-red">
+   <p> <%= flash[:success] %></p>
+   </div>
+<% elsif flash[:error] %>
+  <div id="message" class="alert alert-danger text-center text-red">
+   <p> <%= flash[:error] %></p>
+   </div>
 <% end %>
-</div>
 
 
 <script>

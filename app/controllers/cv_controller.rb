@@ -22,27 +22,14 @@ class CvController < ApplicationController
     if !@userExists
         @user = User.new
         @user.email = params[:signupEmail]
-    
-        # Encrypt the Password
-        len = ActiveSupport::MessageEncryptor.key_len
-        salt = SecureRandom.random_bytes(len)
-        key = ActiveSupport::KeyGenerator.new('password').generate_key(salt, len)
-        crypt = ActiveSupport::MessageEncryptor.new(key)
-        encrypted_pwd = crypt.encrypt_and_sign(params[:signupPwd])
-    
-        # Add encrypted password to user
-        @user.password = encrypted_pwd
-
-        puts "encrypted_pwd: #{encrypted_pwd}"
-        puts "decryoted @user.password: #{crypt.decrypt_and_verify(@user.password)}"
-
+        @user.password = params[:signupPwd]
         @message = "Registration Successfull,"
-        flash[:message] = @message
+        flash[:success] = @message
         @user.save
         redirect_to signupform_path
     else
         @message = "This user is already registered."
-        flash[:message] = @message
+        flash[:error] = @message
         redirect_to signupform_path
     end 
 
