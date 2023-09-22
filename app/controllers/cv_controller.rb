@@ -94,4 +94,11 @@ class CvController < ApplicationController
     end
   end
 
+  def mycvs
+    @cvs = Cv.where(email: cookies[:email])
+  end
+
+  def destroy
+  end
+
 end

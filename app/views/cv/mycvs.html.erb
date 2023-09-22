@@ -1,5 +1,10 @@
-<div id="<%= dom_id cv %>">
-<div class="col-12 container">
+<%= render "header" %>
+
+<h1 class="text-center">My CVs</h1>
+<div class="row m-4">
+  <% if @cvs %>
+    <% @cvs.each do |cv| %>
+<div class="col-6">
         <div class="card blue-grey darken-1">
           <div class="card-content white-text">
             <h1 class="text-center">CV</h1>
@@ -30,12 +35,11 @@
             <h6 id="preview-certification"><%=cv.certification%></h6>
             <% end %>
           </div>
-          <div class="card-action text-center">
-            <%= button_to "Destroy this cv", @cv, method: :delete%>
-            <%= link_to "Edit this cv", edit_cv_path(@cv) %>
-            <%= link_to "Back to cvs", mycvs_path %>
+          <div class="card-action">
+            <a href="cvs/<%=cv.id%>">View</a>
           </div>
         </div>
   </div>
-
-</div>
+    <% end %>
+    <% end %>
+  </div>

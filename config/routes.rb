@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  resources :cvs
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :cvs
+
 
   get "/loginform",to: "cv#loginform", as: :loginform
   get "/signupform",to: "cv#signupform"
@@ -10,6 +11,10 @@ Rails.application.routes.draw do
   get "/home", to: "cv#homepage"
   get "/account", to: "cv#account"
   get "/logout", to: "cv#logout"
-  post "/addcv", to: "cv#addcv"    
+  post "/addcv", to: "cv#addcv"
+  get "/mycvs", to: "cv#mycvs" 
   root "cv#loginform"
+
+  
+
 end

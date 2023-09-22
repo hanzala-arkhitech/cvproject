@@ -51,10 +51,15 @@ class CvsController < ApplicationController
   def destroy
     @cv.destroy
 
+    # flash[:success] = "CV Deleted."
+  
     respond_to do |format|
-      format.html { redirect_to cvs_url, notice: "Cv was successfully destroyed." }
-      format.json { head :no_content }
+      format.html { redirect_to mycvs_url, notice: "Cv was successfully destroyed." }
     end
+    # respond_to do |format|
+    #   format.html { redirect_to cvs_url, notice: "Cv was successfully destroyed." }
+    #   format.json { head :no_content }
+    # end
   end
 
   private
@@ -67,4 +72,5 @@ class CvsController < ApplicationController
     def cv_params
       params.require(:cv).permit(:email, :cvemail, :image, :fullname, :phone, :sociallink, :schoolcollege, :major, :duration, :experience, :skills, :certification)
     end
+
 end
