@@ -1,0 +1,8 @@
+<%= render "header" %>
+
+<% if @email %>
+<div class="text-center">
+<h1 class="text-center"> <%= @email %> </h1>
+<a href="/logout" class="btn btn-danger" > Logout </a>
+</div>
+<% end %>

@@ -1,0 +1,77 @@
+<%= form_with(model: cv) do |form| %>
+  <% if cv.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(cv.errors.count, "error") %> prohibited this cv from being saved:</h2>
+
+      <ul>
+        <% cv.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :email, style: "display: block" %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div>
+    <%= form.label :cvemail, style: "display: block" %>
+    <%= form.text_field :cvemail %>
+  </div>
+
+  <div>
+    <%= form.label :image, style: "display: block" %>
+    <%= form.text_field :image %>
+  </div>
+
+  <div>
+    <%= form.label :fullname, style: "display: block" %>
+    <%= form.text_field :fullname %>
+  </div>
+
+  <div>
+    <%= form.label :phone, style: "display: block" %>
+    <%= form.text_field :phone %>
+  </div>
+
+  <div>
+    <%= form.label :sociallink, style: "display: block" %>
+    <%= form.text_field :sociallink %>
+  </div>
+
+  <div>
+    <%= form.label :schoolcollege, style: "display: block" %>
+    <%= form.text_field :schoolcollege %>
+  </div>
+
+  <div>
+    <%= form.label :major, style: "display: block" %>
+    <%= form.text_field :major %>
+  </div>
+
+  <div>
+    <%= form.label :duration, style: "display: block" %>
+    <%= form.text_field :duration %>
+  </div>
+
+  <div>
+    <%= form.label :experience, style: "display: block" %>
+    <%= form.text_area :experience %>
+  </div>
+
+  <div>
+    <%= form.label :skills, style: "display: block" %>
+    <%= form.text_area :skills %>
+  </div>
+
+  <div>
+    <%= form.label :certification, style: "display: block" %>
+    <%= form.text_area :certification %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,1 +1,183 @@
-<h1>Homepage</h1>
+<%= render "header" %>
+
+<% if flash[:success]%>
+  <div id="message" class="alert alert-success text-center text-red">
+   <p> <%= flash[:success] %></p>
+   </div>
+<% elsif flash[:error] %>
+  <div id="message" class="alert alert-danger text-center text-red">
+   <p> <%= flash[:error] %></p>
+   </div>
+<% end %>
+
+<div class="row">
+
+<form method="POST" action="addcv" class="col-6">
+<%= token_tag %>
+<h1 class="text-center"> Add CV </h1>
+<!-- <h6 class="text-center"> Image </h6>
+<div class="col-6 mb-3" style="margin: auto;">
+  <label for="image" class="form-label">Select Image (jpg)</label>
+  <input type="file" class="form-control" name="image" id="image" accept="image/jpg">
+</div> -->
+<h6 class="text-center"> Contact Information </h6>
+<div class="col-6 mb-3" style="margin: auto;">
+    <label for="fullname" class="form-label">Enter Full Name</label>
+    <input class="profile-input" type="text" name="fullname" id="fullname" placeholder="Full Name" required>
+  </div>
+  <div class="col-6 mb-3" style="margin: auto;">
+    <label for="email" class="form-label">Email</label>
+    <input class="profile-input" type="email" name="email" id="email" placeholder="Email" required>
+  </div>
+    <div class="col-6 mb-3" style="margin: auto;">
+    <label for="phone" class="form-label">Phone Number</label>
+    <input class="profile-input" type="number" name="phone" id="phone" placeholder="Phone Number">
+  </div>
+  <div class="col-6 mb-3" style="margin: auto;">
+    <label for="sociallink" class="form-label">Social Link</label>
+    <input class="profile-input" type="text" name="sociallink" id="sociallink" placeholder="Social Link (LinkedIn)">
+  </div>
+  <h6 class="text-center"> Education </h6>
+  <div class="col-6 mb-3" style="margin: auto;">
+    <label for="schoolcollege" class="form-label">Enter School/College Name</label>
+    <input class="education-input" type="text" name="schoolcollege" id="schoolcollege" placeholder="School/College">
+  </div>
+  <div class="col-6 mb-3" style="margin: auto;">
+    <label for="major" class="form-label">Enter Subject</label>
+    <input class="education-input" type="text" name="major" id="major" placeholder="Major Subject/s">
+  </div>
+  <div class="col-6 mb-3" style="margin: auto;">
+    <label for="duration" class="form-label">Enter Duration</label>
+    <input class="education-input" type="text" name="duration" id="duration" placeholder="e.g Sep 19 - Oct 20">
+  </div>
+  <h6 class="text-center"> Experience </h6>
+  <div class="col-6 mb-3" style="margin: auto;">
+    <label for="experience" class="form-label">Add Experience</label>
+    <textarea class="education-input" type="text" name="experience" id="experience" placeholder="Add Professional Experience to stand out" rows="3"></textarea>
+  </div>
+  <h6 class="text-center"> Skills </h6>
+  <div class="col-6 mb-3" style="margin: auto;">
+    <label for="skills" class="form-label">Add Skills</label>
+    <textarea type="text" name="skills" id="skills" placeholder="Add Your Prominent Skill Set" rows="3"></textarea>
+  </div>
+  <h6 class="text-center"> Certifications </h6>
+  <div class="col-6 mb-3" style="margin: auto;">
+    <label for="certification" class="form-label">Add Certifications (if any)</label>
+    <textarea type="text" name="certification" id="certification" placeholder="Add Your Certification" rows="3"></textarea>
+  </div>
+
+
+  <div style="text-align: center;">
+    <button type="submit" class="btn-floating btn-large waves-effect waves-light red"><i class="material-icons">add</i></button>
+  </div>
+</form>
+
+<div class="col-6">
+<!-- <img id="preview-img" src="" alt="" srcset=""> -->
+<h1 class="text-center">Your CV</h1>
+<h3 id="preview-heading-profile" class="d-none">Profile</h3>
+<h5 id="preview-fullname"></h5>
+<h6 id="preview-email"></h6>
+<h6 id="preview-phone"></h6>
+<h6 id="preview-sociallink"></h6>
+<h3 id="preview-heading-education" class="d-none">Education</h3>
+<h5 id="preview-schoolcollege"></h5>
+<h6 id="preview-major"></h6>
+<h6 id="preview-duration"></h6>
+<h3 id="preview-heading-experience" class="d-none">Experience</h3>
+<h6 id="preview-experience"></h6>
+<h3 id="preview-heading-skills" class="d-none">Skills</h3>
+<h6 id="preview-skills"></h6>
+<h3 id="preview-heading-certification" class="d-none">Certification</h3>
+<h6 id="preview-certification"></h6>
+
+
+
+
+</div>
+
+</div>
+
+
+<% if @posts %>
+<h2 class="text-center container mt-4"> NOTES </h2>
+  <% @posts.each do |post| %>
+  <div class="row">
+    <div class="col s12 m6 container" style="margin:10px 30% 10px 30%">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title"><%= post.title %></span>
+          <p><%= post.description %></p>
+        </div>
+        <div class="card-action">
+          <a href="#">Delete</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% end %>
+<% end %>
+
+
+<script>
+
+$(document).ready(function() {
+  // $('#image').on('input', function() {
+  //   var imageurl = $(this).val();
+  //   console.log(imageurl);
+  //   $('#preview-img').attr("src", imageurl);
+  // });
+
+  $('.profile-input').on('input', function() {
+    $('#preview-heading-profile').removeClass("d-none")
+    // Get the input field's id and value
+    var inputId = $(this).attr('id');
+    var inputValue = $(this).val();
+
+    // Build the preview ID based on the input field's id
+    var previewId = '#preview-' + inputId;
+
+    // Update the corresponding preview element
+    $(previewId).html(inputValue);
+  });  
+  
+  $('.education-input').on('input', function() {
+    $('#preview-heading-education').removeClass("d-none")
+    // Get the input field's id and value
+    var inputId = $(this).attr('id');
+    var inputValue = $(this).val();
+
+    // Build the preview ID based on the input field's id
+    var previewId = '#preview-' + inputId;
+
+    // Update the corresponding preview element
+    $(previewId).html(inputValue);
+  });
+
+  $('#experience').on('input', function() {
+    $('#preview-heading-experience').removeClass("d-none")
+    var experience = $(this).val();
+    $('#preview-experience').html(experience);
+  });
+  
+  $('#skills').on('input', function() {
+    $('#preview-heading-skills').removeClass("d-none")
+    var skills = $(this).val();
+    $('#preview-skills').html(skills);
+  });
+  
+  $('#certification').on('input', function() {
+    $('#preview-heading-certification').removeClass("d-none")
+    var certification = $(this).val();
+    $('#preview-certification').html(certification);
+  });
+  
+
+});
+
+setTimeout(() => {
+  message = document.getElementById("message");
+  message.classList.add("d-none")
+}, 2000);
+  
+</script>
