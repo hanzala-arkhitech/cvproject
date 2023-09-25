@@ -1,20 +1,17 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+
+  get "/loginform",to: "cvs#loginform", as: :loginform
+  get "/signupform",to: "cvs#signupform"
+  post "/signupUser",to: "cvs#registerUser"
+  post "/loginUser",to: "cvs#loginUser"
+  get "/home", to: "cvs#homepage"
+  get "/account", to: "cvs#account"
+  get "/logout", to: "cvs#logout"
+  post "/addcv", to: "cvs#addcv"
+  get "/mycvs", to: "cvs#mycvs" 
+  root "cvs#loginform"
   resources :cvs
-
-
-  get "/loginform",to: "cv#loginform", as: :loginform
-  get "/signupform",to: "cv#signupform"
-  get "/error", to: "cv#error"
-  post "/signupUser",to: "cv#registerUser"
-  post "/loginUser",to: "cv#loginUser"
-  get "/home", to: "cv#homepage"
-  get "/account", to: "cv#account"
-  get "/logout", to: "cv#logout"
-  post "/addcv", to: "cv#addcv"
-  get "/mycvs", to: "cv#mycvs" 
-  root "cv#loginform"
-
-  
 
 end

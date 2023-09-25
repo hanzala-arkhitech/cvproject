@@ -1,15 +1,11 @@
 require 'active_support'
 
-
 class CvController < ApplicationController
 
-  def login
+  def loginform
   end
 
-  def signup
-  end
-  
-  def error
+  def signupform
   end
 
   def registerUser
@@ -17,7 +13,6 @@ class CvController < ApplicationController
     @password = params[:signupPwd]
 
     @userExists = User.find_by(email:@email)
-
 
     if !@userExists
         @user = User.new
