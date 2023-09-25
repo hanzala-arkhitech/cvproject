@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-
   get "/loginform",to: "cvs#loginform", as: :loginform
   get "/signupform",to: "cvs#signupform"
   post "/signupUser",to: "cvs#registerUser"
